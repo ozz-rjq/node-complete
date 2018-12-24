@@ -1,3 +1,8 @@
-const fs = require('fs');
+const http = require('http');
 
-fs.writeFileSync('.gitignore', '');
+const reqListener = function(req, res) {
+  console.log(req);
+  res.end('you have been connected to the server!');
+}
+
+http.createServer(reqListener).listen(3000);

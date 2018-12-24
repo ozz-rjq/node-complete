@@ -1,2 +1,3 @@
-let test = 'test';
+const fs = require('fs');
 
+fs.writeFileSync('.gitignore', '');

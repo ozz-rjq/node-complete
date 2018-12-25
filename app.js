@@ -1,3 +1,4 @@
+const fs = require('fs');
 const http = require('http');
 
 const reqListener = function(req, res) {
@@ -15,6 +16,19 @@ const reqListener = function(req, res) {
     res.write("<p>You reached: " + url + " path.</p>");
   } else if (url === "/message" && method === "POST") {
     res.write("<p>POST method has been sended</p>");
+    const body = [];
+
+    req.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    req.on('end', () => {
+      const parsedBody = Buffer.concat(body).toString();
+
+      const postedMessage = parsedBody.split('=')[1];
+
+      fs.writeFileSync('message.txt', postedMessage);
+    })
   } else {
     res.write("<form action='/message' method='POST'><input type='text' name='name'><button type='submit'>POST</button></form>");
   }

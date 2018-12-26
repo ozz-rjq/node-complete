@@ -1,0 +1,28 @@
+{
+  "name": "node-complete",
+  "version": "1.0.0",
+  "description": "Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozz-rjq/node-complete.git"
+  },
+  "keywords": [
+    "node.js",
+    "sequalize",
+    "mongoose",
+    "rest",
+    "api",
+    "graphql",
+    "socket.io"
+  ],
+  "author": "taras-tataryn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ozz-rjq/node-complete/issues"
+  },
+  "homepage": "https://github.com/ozz-rjq/node-complete#readme"
+}

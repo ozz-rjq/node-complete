@@ -7,15 +7,12 @@ const reqListener = function(req, res) {
 
   res.setHeader('Content-Type', 'text/html');
 
-  res.write("<html>");
-  res.write("<head><title>Render HTML</title></head>");
-  res.write("<body>");
-  res.write("<h1>Hello from Node.js server</h1>");
-
   if (url === "/") {
+    res.write("<h1>Hello from Node.js server</h1>");
     res.write("<p>You reached: " + url + " path.</p>");
-  } else if (url === "/message" && method === "POST") {
+  } else if (url === '/message' && method === 'GET') {
     res.write("<p>POST method has been sended</p>");
+  } else if (url === "/message" && method === "POST") {
     const body = [];
 
     req.on('data', (chunk) => {
@@ -27,16 +24,19 @@ const reqListener = function(req, res) {
 
       const postedMessage = parsedBody.split('=')[1];
 
-      fs.writeFileSync('message.txt', postedMessage);
-    })
+      fs.writeFile('message.txt', postedMessage, err => {
+        if (err) {
+          console.log(err);
+        }
+
+        res.statusCode = 302;
+        res.setHeader('Location', '/message');
+        return res.end();
+      });
+    });
   } else {
     res.write("<form action='/message' method='POST'><input type='text' name='name'><button type='submit'>POST</button></form>");
   }
-
-  res.write("</body>");
-  res.write("</html>");
-
-  res.end();
 }
 
 http.createServer(reqListener).listen(3000);

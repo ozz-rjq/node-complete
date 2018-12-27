@@ -4,7 +4,8 @@
   "description": "Node.js",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/ozz-rjq/node-complete/issues"
   },
-  "homepage": "https://github.com/ozz-rjq/node-complete#readme"
+  "homepage": "https://github.com/ozz-rjq/node-complete#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
 }

@@ -24,3 +24,10 @@ module.exports.getCart = (req, res, next) => {
     {path: '/cart'}
   );
 }
+
+module.exports.getOrders = (req, res, next) => {
+  res.render(
+    'shop/orders', 
+    {path: '/orders'}
+  );
+}

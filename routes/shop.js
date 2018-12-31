@@ -8,7 +8,7 @@ const router = express.Router();
 const products = require('./admin').products;
 
 router.get('/', (req, res, next) => {
-  res.render('shop', {products: products});
+  res.render('shop', {products: products, path: '/'});
 });
 
 module.exports = router;

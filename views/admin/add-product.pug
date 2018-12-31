@@ -13,5 +13,15 @@ block content
       .form-control
         label(for="title") Title
         input(type="text", name="title")#title
+      .form-control
+        label(for="title") ImageUrl
+        input(type="text", name="imageUrl",
+              value="https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png")#imageUrl
+      .form-control
+        label(for="title") Price
+        input(type="number", name="price")#price
+      .form-control
+        label(for="title") Description
+        textarea(name="description", rows="5")#description
 
       button.btn(type="submit") Add Product

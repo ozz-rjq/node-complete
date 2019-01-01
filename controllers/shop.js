@@ -30,10 +30,24 @@ module.exports.getProduct = (req, res, next) => {
 }
 
 module.exports.getCart = (req, res, next) => {
-  res.render(
-    'shop/cart', 
-    {path: '/cart'}
-  );
+  Cart.getCart(cart => {
+    const cartProducts = [];
+    Product.fetchAll(products => {
+      for (let product of products) {
+        const cartProductData = cart.products.find(
+          prod => prod.id == product.id
+        );
+        if (cartProductData) {
+          cartProducts.push({productData: product, qty: cartProductData.qty});
+        }
+      }
+      console.log(cartProducts);
+      res.render(
+        'shop/cart', 
+        {path: '/cart', products: cartProducts}
+      );
+    });
+  });
 }
 
 module.exports.postCart = (req, res, next) => {

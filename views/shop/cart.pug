@@ -2,3 +2,11 @@ extends ../layouts/main-layout.pug
 
 block title
   title Cart
+
+block content
+  main
+    if products.length > 0
+      each p in products
+        p #{p.productData.title} - #{p.qty}
+    else 
+      p There is no products in the cart

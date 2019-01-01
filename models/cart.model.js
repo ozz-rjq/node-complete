@@ -1,7 +1,7 @@
 const fs = require('fs');
 const pathCore = require('path');
 
-const rootDir = require('./../util/path');
+const rootDir = require('../util/path');
 
 const path = pathCore.join(rootDir, 'data', 'cart.json');
 

@@ -4,7 +4,7 @@ const pathCore = require('path');
 const rootDir = require('../util/path');
 const path = pathCore.join(rootDir, 'data', 'products.json');
 
-const Cart = require('./cart');
+const Cart = require('./cart.model');
 
 // helper-function
 const getProductsFromFile = (cb) => {

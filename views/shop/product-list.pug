@@ -22,7 +22,8 @@ block content
             .card__actions
               form(action=`/products/${product.id}`, method="GET")
                 button.btn(type="submit") Details
-              form(action="/add-to-cart", method="POST")
+              form(action="/cart", method="POST")
                 button.btn(type="submit") Add to Cart
+                input(type="hidden", name="productId", value=`${product.id}`)
     else 
       h1 There is no products

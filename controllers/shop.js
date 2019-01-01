@@ -18,6 +18,16 @@ module.exports.getUserProducts = (req, res, next) => {
   });
 }
 
+module.exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.getProductById(prodId, product => {
+    res.render(
+      'shop/product-detail', 
+      {product: product, path: '/products'}
+    );
+  });
+}
+
 module.exports.getCart = (req, res, next) => {
   res.render(
     'shop/cart', 

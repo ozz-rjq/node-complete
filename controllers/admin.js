@@ -11,8 +11,8 @@ module.exports.getAdminProducts = (req, res, next) => {
 
 module.exports.getAddProduct = (req, res, next) => {
   res.render(
-    'admin/add-product', 
-    {path: '/admin/add-product'}
+    'admin/edit-product', 
+    {path: '/admin/add-product', editing: false}
   );
 }
 
@@ -26,4 +26,15 @@ module.exports.postAddProduct = (req, res, next) => {
 
   product.save();
   res.redirect('/');
+}
+
+module.exports.getEditProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+
+  Product.getProductById(prodId, product => {
+    res.render(
+      'admin/edit-product', 
+      {path: '/admin/add-product', product: product, editing: true}
+    );
+  })
 }

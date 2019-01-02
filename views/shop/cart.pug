@@ -3,10 +3,20 @@ extends ../layouts/main-layout.pug
 block title
   title Cart
 
+
+block styles
+  link(rel="stylesheet", href="/css/forms.css")
+
 block content
   main
     if products.length > 0
+      h1.centered Cart
       each p in products
-        p #{p.productData.title} - #{p.qty}
+        .cart-item
+          h3 <em>#{p.qty}</em> - #{p.productData.title}, $#{p.productData.price}
+          form(action="/cart/delete", method="POST")
+            input(type="hidden", name="productId", value=`${p.productData.id}`)
+            button.btn(type="submit") Delete product from cart
+
     else 
-      p There is no products in the cart
+      h2 There is no products in the cart

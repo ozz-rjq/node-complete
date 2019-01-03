@@ -7,6 +7,8 @@ const shopRoutes = require('./routes/shop.routes');
 
 const errorController = require('./controllers/error.controller');
 
+const db = require('./util/database.connection');
+
 const app = express();
 
 // app.set(name, value) allows us to set any value globally in our express application
@@ -16,6 +18,8 @@ app.set('views', 'views');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// db.execute('SELECT * FROM product;').then()
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

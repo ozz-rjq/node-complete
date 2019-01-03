@@ -19,7 +19,16 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// db.execute('SELECT * FROM product;').then()
+db.execute('SELECT * FROM product;')
+  .then(result => {
+    const resultSet = result[0];
+    for (let r of resultSet) {
+      console.log(r.title);
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

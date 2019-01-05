@@ -29,14 +29,18 @@ module.exports.getUserProducts = (req, res, next) => {
     .catch(err => console.log(err))
 }
 
-module.exports.getProduct = (req, res, next) => {
+module.exports.getProductDetails = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.getProductById(prodId, product => {
-    res.render(
-      'shop/product-detail', 
-      {product: product, path: '/products'}
-    );
-  });
+  Product.getProductById(prodId)
+    .then(([products]) => {
+      const product = products[0];
+
+      res.render(
+        'shop/product-detail', 
+        {product: product, path: '/products'}
+      );
+    })
+    .catch(err => console.log(err));
 }
 
 module.exports.getCart = (req, res, next) => {

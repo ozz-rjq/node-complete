@@ -24,19 +24,21 @@ module.exports.getAddProduct = (req, res, next) => {
 }
 
 module.exports.postAddProduct = (req, res, next) => {
-  const id = null;
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
 
-  const product = new Product(id, title, imageUrl, price, description);
-
-  product.save()
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch(err => console.log(err));
+  Product.create({
+    title: title,
+    price: price,
+    imageUrl: imageUrl,
+    descripton: description
+  }).then(resolve => {
+    console.log(resolve);
+  }).catch(err => {
+    console.log(err);
+  });
 }
 
 module.exports.getEditProduct = (req, res, next) => {

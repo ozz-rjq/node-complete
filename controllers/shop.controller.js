@@ -21,7 +21,7 @@ module.exports.getUserProducts = (req, res, next) => {
     .then(products => {
       console.log(products);
       res.render(
-        'shop/index', 
+        'shop/product-list', 
         {
           products: products, 
           path: '/products'
@@ -33,13 +33,14 @@ module.exports.getUserProducts = (req, res, next) => {
 
 module.exports.getProductDetails = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.getProductById(prodId)
-    .then(([products]) => {
-      const product = products[0];
-
+  Product.findById(prodId)
+    .then((product) => {
       res.render(
         'shop/product-detail', 
-        {product: product, path: '/products'}
+        {
+          product: product, 
+          path: '/products'
+        }
       );
     })
     .catch(err => console.log(err));

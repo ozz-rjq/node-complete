@@ -7,6 +7,8 @@ const shopRoutes = require('./routes/shop.routes');
 
 const errorController = require('./controllers/error.controller');
 
+const db = require('./util/database.connection');
+
 const app = express();
 
 // app.set(name, value) allows us to set any value globally in our express application
@@ -22,4 +24,9 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+db.sync()
+  .then(result => {
+    console.log(result);
+    app.listen(3000);
+  })
+  .catch(err => console.log(err))

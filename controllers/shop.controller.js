@@ -2,8 +2,9 @@ const Product = require('../models/product.model');
 const Cart = require('../models/cart.model');
 
 module.exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-    .then(([products, fieldData]) => {
+  Product.findAll()
+    .then(products => {
+      console.log(products);
       res.render(
         'shop/index', 
         {
@@ -16,8 +17,9 @@ module.exports.getIndex = (req, res, next) => {
 }
 
 module.exports.getUserProducts = (req, res, next) => {
-  Product.fetchAll()
-    .then(([products, fieldData]) => {
+  Product.findAll()
+    .then(products => {
+      console.log(products);
       res.render(
         'shop/index', 
         {
@@ -26,7 +28,7 @@ module.exports.getUserProducts = (req, res, next) => {
         }
       );
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 }
 
 module.exports.getProductDetails = (req, res, next) => {

@@ -1,8 +1,8 @@
 const Product = require('../models/product.model');
 
 module.exports.getAdminProducts = (req, res, next) => {
-  Product.fetchAll()
-    .then(([products, fieldData]) => {
+  Product.findAll()
+    .then(products => {
       res.render(
         'admin/products', 
         {
@@ -44,12 +44,18 @@ module.exports.postAddProduct = (req, res, next) => {
 module.exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
 
-  Product.getProductById(prodId, product => {
-    res.render(
-      'admin/edit-product', 
-      {path: '/admin/add-product', product: product, editing: true}
-    );
-  })
+  Product.findById(prodId)
+    .then(product => {
+      res.render(
+        'admin/edit-product', 
+        {
+          path: '/admin/add-product', 
+          product: product, 
+          editing: true
+        }
+      );
+    })
+    .catch(err => console.log(err))
 }
 
 module.exports.postEditProduct = (req, res, next) => {
@@ -59,10 +65,19 @@ module.exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
 
-  const product = new Product(prodId, updatedTitle, updatedImageUrl, updatedPrice, updatedDescription);
-  product.save();
+  Product.findById(prodId)
+    .then(product => {
+      product.title = updatedTitle;
+      product.imageUrl = updatedImageUrl;
+      product.price = updatedPrice;
+      product.description = updatedDescription;
 
-  res.redirect('/products');
+      return product.save();
+    })
+    .then(_ => {
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err));
 }
 
 module.exports.postDeleteOrder = (req, res, next) => {

@@ -33,7 +33,7 @@ module.exports.postAddProduct = (req, res, next) => {
     title: title,
     price: price,
     imageUrl: imageUrl,
-    descripton: description
+    description: description
   }).then(resolve => {
     console.log(resolve);
   }).catch(err => {

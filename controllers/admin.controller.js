@@ -36,6 +36,7 @@ module.exports.postAddProduct = (req, res, next) => {
     description: description
   }).then(resolve => {
     console.log(resolve);
+    res.redirect('/admin/products');
   }).catch(err => {
     console.log(err);
   });
@@ -83,6 +84,13 @@ module.exports.postEditProduct = (req, res, next) => {
 module.exports.postDeleteOrder = (req, res, next) => {
   const productId = req.body.productId;
 
-  Product.delete(productId);
-  res.redirect('/products');
+  Product.destroy({
+    where: {
+      id: productId
+    }
+  })
+    .then(_ => {
+      res.redirect('/products');
+    })
+    .catch(err => console.log(err));
 }

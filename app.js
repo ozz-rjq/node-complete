@@ -8,6 +8,8 @@ const shopRoutes = require('./routes/shop.routes');
 const errorController = require('./controllers/error.controller');
 
 const db = require('./util/database.connection');
+const Product = require('./models/product.model');
+const User = require('./models/user.model');
 
 const app = express();
 
@@ -24,7 +26,10 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-db.sync()
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
+db.sync({ force: true })
   .then(result => {
     app.listen(3000);
   })

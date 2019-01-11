@@ -29,15 +29,17 @@ module.exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
 
-  Product.create({
+  req.user.createProduct({
     title: title,
     price: price,
     imageUrl: imageUrl,
     description: description
-  }).then(resolve => {
+  })
+  .then(resolve => {
     console.log(resolve);
     res.redirect('/admin/products');
-  }).catch(err => {
+  })
+  .catch(err => {
     console.log(err);
   });
 }

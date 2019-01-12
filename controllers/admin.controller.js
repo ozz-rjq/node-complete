@@ -1,19 +1,19 @@
 const Product = require('../models/product.model');
 
 module.exports.getAdminProducts = (req, res, next) => {
-  Product.findAll()
-    .then(products => {
-      res.render(
-        'admin/products', 
-        {
-          products: products, 
-          path: '/admin/products'
-        }
-      );
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  req.user.getProducts()
+  .then(products => {
+    res.render(
+      'admin/products', 
+      {
+        products: products, 
+        path: '/admin/products'
+      }
+    );
+  })
+  .catch(err => {
+    console.log(err);
+  })
 }
 
 module.exports.getAddProduct = (req, res, next) => {
@@ -47,8 +47,12 @@ module.exports.postAddProduct = (req, res, next) => {
 module.exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
 
-  Product.findById(prodId)
-    .then(product => {
+  req.user.getProducts({ where: {
+    id: prodId
+  }})
+    .then(products => {
+      const product = products[0];
+
       res.render(
         'admin/edit-product', 
         {
@@ -58,7 +62,6 @@ module.exports.getEditProduct = (req, res, next) => {
         }
       );
     })
-    .catch(err => console.log(err))
 }
 
 module.exports.postEditProduct = (req, res, next) => {

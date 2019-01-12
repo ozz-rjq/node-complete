@@ -37,7 +37,9 @@ app.use(errorController.get404);
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 
-db.sync({ force: true })
+db.sync(
+  // { force: true }
+  )
   .then(_ => {
     return User.findById(1);
   })

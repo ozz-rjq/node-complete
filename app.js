@@ -10,6 +10,8 @@ const errorController = require('./controllers/error.controller');
 const db = require('./util/database.connection');
 const Product = require('./models/product.model');
 const User = require('./models/user.model');
+const Cart = require('./models/cart.model');
+const CartItem = require('./models/cart-item.model');
 
 const app = express();
 
@@ -36,9 +38,13 @@ app.use(errorController.get404);
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+Cart.belongsTo(User);
+User.hasOne(Cart);
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 db.sync(
-  // { force: true }
+  { force: true }
   )
   .then(_ => {
     return User.findById(1);

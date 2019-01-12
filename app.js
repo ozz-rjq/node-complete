@@ -44,7 +44,7 @@ Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 db.sync(
-  { force: true }
+  // { force: true }
   )
   .then(_ => {
     return User.findById(1);
@@ -56,7 +56,9 @@ db.sync(
     return user;
   })
   .then(user => {
-    console.log(user);
+    return user.createCart()
+  })
+  .then(result => {
     app.listen(3000);
   })
   .catch(err => console.log(err));

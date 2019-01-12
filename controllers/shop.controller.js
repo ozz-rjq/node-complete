@@ -47,26 +47,40 @@ module.exports.getProductDetails = (req, res, next) => {
 }
 
 module.exports.getCart = (req, res, next) => {
-  Cart.getCart(cart => {
-    const cartProducts = [];
-    Product.findAll()
-      .then(products => {
-        for (let product of products) {
-          const cartProductData = cart.products.find(
-            prod => prod.id == product.id
+  req.user.getCart()
+    .then(cart => {
+      cart.getProducts()
+        .then(products => {
+          res.render(
+            'shop/cart', 
+            {
+              path: '/cart', 
+              products: products
+            }
           );
-          if (cartProductData) {
-            cartProducts.push({productData: product, qty: cartProductData.qty});
-          }
-        }
-        console.log(cartProducts);
-        res.render(
-          'shop/cart', 
-          {path: '/cart', products: cartProducts}
-        );
-      })
-      .catch(err => console.log(err))
-  });
+        })
+    })
+    .catch(err => console.log(err))
+  // Cart.getCart(cart => {
+  //   const cartProducts = [];
+  //   Product.findAll()
+  //     .then(products => {
+  //       for (let product of products) {
+  //         const cartProductData = cart.products.find(
+  //           prod => prod.id == product.id
+  //         );
+  //         if (cartProductData) {
+  //           cartProducts.push({productData: product, qty: cartProductData.qty});
+  //         }
+  //       }
+  //       console.log(cartProducts);
+  //       res.render(
+  //         'shop/cart', 
+  //         {path: '/cart', products: cartProducts}
+  //       );
+  //     })
+  //     .catch(err => console.log(err))
+  // });
 }
 
 module.exports.postCart = (req, res, next) => {

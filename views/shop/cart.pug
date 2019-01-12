@@ -13,9 +13,9 @@ block content
       h1.centered Cart
       each p in products
         .cart-item
-          h3 <em>#{p.qty}</em> - #{p.productData.title}, $#{p.productData.price}
+          h3 <em>#{p.qty}</em> - #{p.title}, $#{p.price}, quantity - #{p.cartItem.qty}
           form(action="/cart/delete", method="POST")
-            input(type="hidden", name="productId", value=`${p.productData.id}`)
+            input(type="hidden", name="productId", value=`${p.id}`)
             button.btn(type="submit") Delete product from cart
 
     else 

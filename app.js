@@ -65,7 +65,7 @@ db.sync(
     return user;
   })
   .then(user => {
-    return user.createCart()
+    return user.createCart();
   })
   .then(result => {
     app.listen(3000);

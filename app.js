@@ -12,6 +12,8 @@ const Product = require('./models/product.model');
 const User = require('./models/user.model');
 const Cart = require('./models/cart.model');
 const CartItem = require('./models/cart-item.model');
+const Order = require('./models/order.model');
+const OrderItem = require('./models/order-item.model');
 
 const app = express();
 
@@ -36,12 +38,19 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+// define assossiations
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+
 Cart.belongsTo(User);
 User.hasOne(Cart);
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
+
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
+Product.belongsToMany(Order, { through: OrderItem });
 
 db.sync(
   // { force: true }

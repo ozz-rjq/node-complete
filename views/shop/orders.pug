@@ -5,12 +5,13 @@ block content
     h1.centered Orders
     if orders.length > 0
       each o in orders
-        ul
-          li
-            h3 ##{o.id}
-            ul
-              each product in o.products
-                li #{product.title}, quantity - #{product.orderItem.qty}
+        .cart-item
+          ul
+            li
+              h3 ##{o.id}
+              ul
+                each product in o.products
+                  li #{product.title} <em>(#{product.description}</em>), quantity - #{product.orderItem.qty}
 
     else 
       p There are no orders for now

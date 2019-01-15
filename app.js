@@ -39,22 +39,25 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 // define assossiations
+// User-Product *one-to-many
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 
+// Cart-User **many-to-many (through CartItems table)
 Cart.belongsTo(User);
 User.hasOne(Cart);
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
+// Order-User **many-to-many (through OrderItems table)
 Order.belongsTo(User);
 User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 Product.belongsToMany(Order, { through: OrderItem });
 
-db.sync(
-  // { force: true }
-  )
+db
+  .sync()
+  // .sync({ force: true })
   .then(_ => {
     return User.findById(1);
   })
@@ -67,7 +70,7 @@ db.sync(
   .then(user => {
     return user.createCart();
   })
-  .then(result => {
+  .then(_ => {
     app.listen(3000);
   })
   .catch(err => console.log(err));
